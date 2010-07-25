@@ -4,7 +4,7 @@
 """
 
 import sys
-import math
+#import math
 
 def p1():
 	'''Solution to problem 1
@@ -29,11 +29,33 @@ def p2(maxlimit=4000000):
 			s += fn
 	print s
 
-def p3(composite=600851475143):
+def p3(n=600851475143):
 	'''Solution to problem 3
 	'''
-	
-	plist = range(2, int(sqrt(composite)))
+
+	# initial largest prime factor (lpf)
+	lpf = pf = 2
+
+	# a dictionary of prime factors
+	#pfs = {}
+
+	# the main algorithm to find the largest prime factor of a number
+	while n != 1:
+		if n % pf == 0:
+			n /= pf
+			lpf = pf
+			#if pfs.has_key(pf):
+			#	pfs[pf] += 1
+			#else:
+			#	pfs[pf] = 1
+		else:
+			if pf < 3:
+				pf += 1
+			else:
+				pf += 2
+
+	# find the largest prime factor
+	print 'The largest prime factor is:', lpf #max(pfs.keys()) 
 
 def p5():
 	'''Solution to problem 5
