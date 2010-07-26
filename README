@@ -6,6 +6,6 @@
 
 [Note]:
 The solutions I made are all in euler.py. To run euler.py, simply do ./euler.py p#, where # = problem number. 
-For example, if you want to see the answer in problem 3, type ./euler.py p3 in the command prompy.
+For example, if you want to see the answer in problem 3, type ./euler.py p3 in the command prompt.
 
 The pdf files in the repository are solutions and explanation provided by Project Euler. 
