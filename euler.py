@@ -6,6 +6,49 @@
 import sys
 #import math
 
+def int_factorization(n=232792560):
+	'''A function that implements integer factorization
+	'''
+
+	# make a copy of n
+	composite = n
+
+	# initial prime factor
+	pf = 2
+
+	# a dictionary of prime factors
+	pfs = {}
+
+	# the main algorithm to find the prime factors of a number
+	while n != 1:
+		if n % pf == 0:
+			n /= pf
+			if pfs.has_key(pf):
+				pfs[pf] += 1
+			else:
+				pfs[pf] = 1
+		else:
+			if pf < 3:
+				pf += 1
+			else:
+				pf += 2
+
+	primes = sorted(pfs.keys())
+	
+	# output result
+	print composite, '=',
+	for p in primes:
+		if pfs[p] > 1:
+			print str(p)+'^'+str(pfs.get(p)),
+		else:	
+			print p,
+
+		if p == primes[-1]:
+			print ''
+		else:
+			print 'X',
+		
+
 def p1():
 	'''Solution to problem 1
 	'''
@@ -36,18 +79,11 @@ def p3(n=600851475143):
 	# initial largest prime factor (lpf)
 	lpf = pf = 2
 
-	# a dictionary of prime factors
-	#pfs = {}
-
 	# the main algorithm to find the largest prime factor of a number
 	while n != 1:
 		if n % pf == 0:
 			n /= pf
 			lpf = pf
-			#if pfs.has_key(pf):
-			#	pfs[pf] += 1
-			#else:
-			#	pfs[pf] = 1
 		else:
 			if pf < 3:
 				pf += 1
@@ -55,7 +91,7 @@ def p3(n=600851475143):
 				pf += 2
 
 	# find the largest prime factor
-	print 'The largest prime factor is:', lpf #max(pfs.keys()) 
+	print 'The largest prime factor is:', lpf
 
 def p5():
 	'''Solution to problem 5
@@ -76,6 +112,7 @@ def p6():
 def main():
 	
 	func_list = {
+		     'if': int_factorization,	
 		     'p1': p1, 
 		     'p2': p2, 
 		     'p3': p3, 
