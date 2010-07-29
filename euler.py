@@ -108,6 +108,38 @@ def p6():
 	sum_of_squares = sum(map(lambda x: x*x, range(1, 101)))
 	print abs(square_of_sum - sum_of_squares)
 
+def p7(limit=10001):
+	'''Solution to problem 7
+	'''
+	
+	prime_list = [2, 3]
+
+	# primality testing function
+	def is_prime(n, list):
+		test = True
+		sublist = filter(lambda x: x>2 and x*x <= n, list)
+		for p in sublist:
+			if n % p != 0:	
+				continue
+			else:
+				test = False
+				break
+
+		return test
+
+	# produce next prime according to current prime
+	def next_prime(current):
+		next = current + 2
+		while not is_prime(next, prime_list):
+			next += 2 
+		return next
+
+
+	# generate a list of prime numbers until limit
+	while len(prime_list) < limit:
+		prime_list.append(next_prime(prime_list[-1]))
+
+	print prime_list[limit-1]	
 
 def main():
 	
@@ -117,7 +149,8 @@ def main():
 		     'p2': p2, 
 		     'p3': p3, 
 		     'p5': p5, 
-		     'p6': p6 
+		     'p6': p6, 
+		     'p7': p7 
 		    }
 		    
 	if len(sys.argv) != 2: 
