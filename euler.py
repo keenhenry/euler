@@ -183,7 +183,6 @@ def p7_alt(limit=10001):
 def main():
 	
 	func_list = {
-		     'p': prime,	
 		     'if': int_factorization,	
 		     'p1': p1, 
 		     'p2': p2, 
