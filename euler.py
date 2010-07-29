@@ -6,6 +6,31 @@
 import sys
 #import math
 
+def prime(n):
+	'''Primality testing function
+	'''
+
+	if n <= 1:
+		return False
+	elif n < 4:
+		return True
+	elif n%2==0:
+		return False
+	elif n < 9:		# already excluded 4, 6, 8
+		return True
+	elif n%3==0:
+		return False
+
+	# prime numbers must be of the form 6k +/- 1
+	p = 5
+	while p**2 <= n:
+		if n%p==0:		return False
+		if (p+2)**2 > n:		pass
+		elif n%(p+2)==0:	return False
+		p += 6		
+	
+	return True	
+
 def int_factorization(n=232792560):
 	'''A function that implements integer factorization
 	'''
@@ -112,45 +137,61 @@ def p7(limit=10001):
 	'''Solution to problem 7
 	'''
 	
-	prime_list = [2, 3]
+	prime_list = [2, 3, 5, 7]
 
-	# primality testing function
+	# primality test
 	def is_prime(n, list):
-		test = True
-		sublist = filter(lambda x: x>2 and x*x <= n, list)
-		for p in sublist:
-			if n % p != 0:	
-				continue
-			else:
-				test = False
-				break
+		for p in prime_list[2:]:
+			if p*p > n:
+				return True
+			elif n%p == 0:	
+				return False
 
-		return test
-
-	# produce next prime according to current prime
-	def next_prime(current):
-		next = current + 2
-		while not is_prime(next, prime_list):
-			next += 2 
-		return next
-
-
-	# generate a list of prime numbers until limit
+	# generate prime numbers until hitting limit
+	p = 11
 	while len(prime_list) < limit:
-		prime_list.append(next_prime(prime_list[-1]))
-
+		if is_prime(p, prime_list):
+			prime_list.append(p)
+		if is_prime(p+2, prime_list):
+			prime_list.append(p+2)
+		p += 6
+		
 	print prime_list[limit-1]	
+
+def p7_alt(limit=10001):
+	'''Alternative solution to problem 7
+	This solution is faster than p7 function for sure.
+	'''
+
+	count = 2
+	p = 5
+
+	candidate = p
+	while 1:
+		if prime(p):
+			count += 1
+			candidate = p
+			if count == limit: break
+		if prime(p+2):
+			count += 1
+			candidate = p+2
+			if count == limit: break
+		p += 6
+
+	print candidate
 
 def main():
 	
 	func_list = {
+		     'p': prime,	
 		     'if': int_factorization,	
 		     'p1': p1, 
 		     'p2': p2, 
 		     'p3': p3, 
 		     'p5': p5, 
 		     'p6': p6, 
-		     'p7': p7 
+		     'p7': p7,
+		     'p7alt': p7_alt
 		    }
 		    
 	if len(sys.argv) != 2: 
