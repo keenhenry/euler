@@ -4,6 +4,7 @@
 """
 
 import sys
+import time
 #import math
 
 def prime(n):
@@ -18,15 +19,17 @@ def prime(n):
 		return False
 	elif n < 9:		# already excluded 4, 6, 8
 		return True
-	elif n%3==0:
+	elif n%3==0 or n%5==0:
 		return False
+	elif n < 49:
+		return True
 
 	# prime numbers must be of the form 6k +/- 1
-	p = 5
+	p = 7
 	while p**2 <= n:
 		if n%p==0:		return False
-		if (p+2)**2 > n:		pass
-		elif n%(p+2)==0:	return False
+		if (p+4)**2 > n:	return True
+		if n%(p+4)==0:		return False
 		p += 6		
 	
 	return True	
@@ -146,7 +149,7 @@ def p7(limit=10001):
 				return True
 			elif n%p == 0:	
 				return False
-
+	
 	# generate prime numbers until hitting limit
 	p = 11
 	while len(prime_list) < limit:
@@ -156,7 +159,7 @@ def p7(limit=10001):
 			prime_list.append(p+2)
 		p += 6
 		
-	print prime_list[limit-1]	
+	print prime_list[limit-1]
 
 def p7_alt(limit=10001):
 	'''Alternative solution to problem 7
@@ -164,9 +167,9 @@ def p7_alt(limit=10001):
 	'''
 
 	count = 2
-	p = 5
-
-	candidate = p
+	candidate = p = 5
+	
+	#s = time.time()
 	while 1:
 		if prime(p):
 			count += 1
@@ -177,8 +180,9 @@ def p7_alt(limit=10001):
 			candidate = p+2
 			if count == limit: break
 		p += 6
+	#e = time.time()
 
-	print candidate
+	print candidate#, str(e - s)
 
 def main():
 	
