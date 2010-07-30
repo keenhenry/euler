@@ -13,15 +13,15 @@ def prime(n):
 
 	if n <= 1:
 		return False
-	elif n < 4:
+	if n < 4:
 		return True
-	elif n%2==0:
+	if n%2==0:
 		return False
-	elif n < 9:		# already excluded 4, 6, 8
+	if n < 9:		# already excluded 4, 6, 8
 		return True
-	elif n%3==0 or n%5==0:
+	if n%3==0 or n%5==0:
 		return False
-	elif n < 49:
+	if n < 49:
 		return True
 
 	# prime numbers must be of the form 6k +/- 1
