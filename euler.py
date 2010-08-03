@@ -76,6 +76,21 @@ def int_factorization(n=232792560):
 		else:
 			print 'X',
 		
+def sieve(n=100000):
+	'''The Sieve of Eratosthenes algorithm
+	'''
+	l = range(1, n, 2)
+	l[0] = 2
+
+	k, p = 1, 3
+	while p*p <= n:
+		for e in l[k+1:]:
+			if e%p == 0:
+				l.remove(e)
+		k += 1		
+		p = l[k]		
+			
+	print 'done'
 
 def p1():
 	'''Solution to problem 1
@@ -120,6 +135,34 @@ def p3(n=600851475143):
 
 	# find the largest prime factor
 	print 'The largest prime factor is:', lpf
+
+def p4():
+	'''Solution to problem 4
+	'''
+
+	# a function to check palindrome
+	def is_palindrome(n):
+		s = str(n)
+		i, j = 0, len(s)-1
+		while i < j:
+			if s[i] != s[j]: return False
+			i += 1
+			j -= 1
+	
+		return True
+
+	# using brute-force method to find answer
+	# two integers must be between 100~999
+	# one of them must be divisible by 11
+	# assume that 'a' is a multiple of 11
+	largest = 0
+	for b in xrange(999, 99, -1):
+		for a in xrange(990, 99, -11):
+			tmp_ans = a*b
+			if is_palindrome(tmp_ans) and tmp_ans > largest:
+				largest = tmp_ans
+	print largest
+
 
 def p5():
 	'''Solution to problem 5
@@ -184,17 +227,35 @@ def p7_alt(limit=10001):
 
 	print candidate#, str(e - s)
 
+def p10(limit=2000000):
+	'''Solution to problem 10
+	'''
+
+	p, s = 5, 5
+	t1 = time.time()
+	while p < limit:
+		if prime(p):
+			s += p
+		if prime(p+2):
+			s += (p+2)
+		p += 6	
+	t2 = time.time()
+	print s, str(t2-t1)
+
 def main():
 	
 	func_list = {
+		     'sieve': sieve,	
 		     'if': int_factorization,	
 		     'p1': p1, 
 		     'p2': p2, 
 		     'p3': p3, 
+		     'p4': p4, 
 		     'p5': p5, 
 		     'p6': p6, 
 		     'p7': p7,
-		     'p7alt': p7_alt
+		     'p7alt': p7_alt,
+		     'p10': p10
 		    }
 		    
 	if len(sys.argv) != 2: 
