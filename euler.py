@@ -8,112 +8,118 @@ import time
 #import math
 
 def prime(n):
-	'''Primality testing function
-	'''
+    '''Primality testing function
 
-	if n <= 1:
-		return False
-	if n < 4:
-		return True
-	if n%2==0:
-		return False
-	if n < 9:		# already excluded 4, 6, 8
-		return True
-	if n%3==0 or n%5==0:
-		return False
-	if n < 49:
-		return True
+    --key Arguments--
+    @n: number to test primality
+    @return: boolean
 
-	# prime numbers must be of the form 6k +/- 1
-	p = 7
-	while p**2 <= n:
-		if n%p==0:		return False
-		if (p+4)**2 > n:	return True
-		if n%(p+4)==0:		return False
-		p += 6		
+    '''
+
+    if n <= 1:
+	return False
+    if n < 4:
+	return True
+    if n%2==0:
+	return False
+    if n < 9:		# already excluded 4, 6, 8
+	return True
+    if n%3==0 or n%5==0:
+	return False
+    if n < 49:
+	return True
+
+    # prime numbers must be of the form 6k +/- 1
+    p = 7					# p = 6k+1
+    while p**2 <= n:
+	if n%p==0:		return False
+	if (p+4)**2 > n:	return True
+	if n%(p+4)==0:		return False	# p = 6k+5 or 6k-1
+	p += 6		
 	
-	return True	
+    return True	
 
-def int_factorization(n=232792560):
-	'''A function that implements integer factorization
-	'''
+def factorize(n=600851475143):
+    '''A function that implements integer factorization.
+    This function is suitable for use with numbers that are not too big,
+    that is, less than 2^50. The bigger the number, the slower this algo
+    runs.
+    
+    --Key Arguments--
+    @n: number to factorize
+    @return:
 
-	# make a copy of n
-	composite = n
+    '''
 
-	# initial prime factor
-	pf = 2
+    # make a copy of n
+    composite = n
 
-	# a dictionary of prime factors
-	pfs = {}
+    # initial prime factor
+    pf = 2
 
-	# the main algorithm to find the prime factors of a number
-	while n != 1:
-		if n % pf == 0:
-			n /= pf
-			if pfs.has_key(pf):
-				pfs[pf] += 1
-			else:
-				pfs[pf] = 1
-		else:
-			if pf < 3:
-				pf += 1
-			else:
-				pf += 2
+    # a dictionary of prime factors -> {k: v} = {prime factor: frequency}
+    pfs = {}
 
-	primes = sorted(pfs.keys())
+    # find the prime factors of a number
+    while n != 1:
+	if n % pf == 0:	# n has prime factor pf
+	    n /= pf		
+	    pfs[pf] = (pfs[pf]+1) if pfs.has_key(pf) else 1
+	else: 		# n has no prime factor pf; update pf to find new prime factor
+		pf += 1 if (pf < 3) else 2
 	
-	# output result
-	print composite, '=',
-	for p in primes:
-		if pfs[p] > 1:
-			print str(p)+'^'+str(pfs.get(p)),
-		else:	
-			print p,
+    # output result
+    primes = sorted(pfs.keys())
 
-		if p == primes[-1]:
-			print ''
-		else:
-			print 'X',
-		
+    ans = str(composite) + ' = '
+    for p in primes:
+	ans += str(p)+'^'+str(pfs.get(p)) if pfs[p] > 1 else str(p)  # 'p^n' or 'p'
+	ans += '' if p==primes[-1] else ' X '			   
+    print ans
+
 def sieve(n=100000):
-	'''The Sieve of Eratosthenes algorithm
-	'''
-	l = range(1, n, 2)
-	l[0] = 2
+    '''The Sieve of Eratosthenes algorithm
+    '''
+    l = range(1, n, 2)
+    l[0] = 2
 
-	k, p = 1, 3
-	while p*p <= n:
-		for e in l[k+1:]:
-			if e%p == 0:
-				l.remove(e)
-		k += 1		
-		p = l[k]		
+    k, p = 1, 3
+    while p*p <= n:
+	for e in l[k+1:]:
+		if e%p == 0:
+			l.remove(e)
+	k += 1		
+	p = l[k]		
 			
-	print 'done'
+    print 'done'
 
 def p1():
-	'''Solution to problem 1
-	'''
+    '''Solution to problem 1
+    '''
 
-	print str(sum(range(0, 1000, 3)) + sum(range(0, 1000, 5)) - \
-		  sum(range(0, 1000, 15)))
+    print (sum(range(0, 1000, 3))+sum(range(0, 1000, 5))-sum(range(0, 1000, 15)))
 
 def p2(maxlimit=4000000):
-	'''Solution to problem 2
-	'''
-	
-	def fib():
-		a, b = 0, 1
-		while b < maxlimit:
-			yield b
-			a, b = b, a+b
-	
-	s = 0
-	for fn in fib():
-		if fn%2 == 0:
-			s += fn
-	print s
+    '''Solution to problem 2
+    
+    --key Arguments--
+    @maxlimit: upper bound for fibonacci numbers
+    @return:
+
+    '''
+
+    # function to generate fibonacci numbers: a generator	
+    def fib():
+	a, b = 0, 1
+	while b < maxlimit:
+		yield b
+		a, b = b, a+b
+
+    s = 0
+    for fn in fib():
+	if fn%2 == 0:
+		s += fn
+    print s
 
 def p3(n=600851475143):
 	'''Solution to problem 3
@@ -269,7 +275,7 @@ def main():
 	
     func_list = {
         'sieve': sieve,	
-    	'if': int_factorization,	
+    	'factor': factorize,	
     	'p1': p1, 
     	'p2': p2, 
     	'p3': p3, 
