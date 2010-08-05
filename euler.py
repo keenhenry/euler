@@ -135,6 +135,7 @@ def p2(maxlimit=4000000):
 		s += fn
     print s
 
+
 def p3(n=600851475143):
     '''Solution to problem 3
     

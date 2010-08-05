@@ -1,9 +1,12 @@
-=====
- This project is about solving problems created by Project Euler
- which can be found here: http://projecteuler.net/
- 07/15/2010
-===== 
+=============================================================================================
+# This project is about solving problems created by Project Euler (http://projecteuler.net/)#
+# @author: Henry Huang                                                                      #
+# @date: 07/15/2010                                                                         #
+=============================================================================================
 
 [Note]:
-The solutions I made are all in euler.py. To run euler.py, simply do ./euler.py p#, where # = problem number. 
-For example, if you want to see the answer for problem 3, type ./euler.py p3 in the command line.
+Solutions from problem 1 to problem 10 are in euler1_10.py.
+Solutions from problem 11 to problem 20 are in euler11_20.py.
+
+To get answer of a particular problem, run ./euler.py p#, where # = problem number. For example, 
+if you want to see the answer for problem 3, type ./euler.py p3 in the command line.
