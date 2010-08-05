@@ -5,7 +5,7 @@
 
 import sys
 import time
-#import math
+import math
 
 def prime(n):
     '''Primality testing function
@@ -39,6 +39,7 @@ def prime(n):
 	
     return True	
 
+
 def factorize(n=600851475143):
     '''A function that implements integer factorization.
     This function is suitable for use with numbers that are not too big,
@@ -66,7 +67,7 @@ def factorize(n=600851475143):
 	    n /= pf		
 	    pfs[pf] = (pfs[pf]+1) if pfs.has_key(pf) else 1
 	else: 		# n has no prime factor pf; update pf to find new prime factor
-		pf += 1 if (pf < 3) else 2
+	    pf += 1 if (pf < 3) else 2
 	
     # output result
     primes = sorted(pfs.keys())
@@ -77,27 +78,40 @@ def factorize(n=600851475143):
 	ans += '' if p==primes[-1] else ' X '			   
     print ans
 
-def sieve(n=100000):
-    '''The Sieve of Eratosthenes algorithm
-    '''
-    l = range(1, n, 2)
-    l[0] = 2
 
-    k, p = 1, 3
-    while p*p <= n:
-	for e in l[k+1:]:
-		if e%p == 0:
-			l.remove(e)
-	k += 1		
-	p = l[k]		
-			
-    print 'done'
+def sieve(upper=1000):
+    '''The Sieve of Eratosthenes algorithm
+    
+    --Key Arguments--
+    @upper: the upper bound of prime number list
+    @return: a list of prime numbers
+    
+    '''
+
+    # creating an array to hold boolean values
+    nums = [False, False]
+    for i in xrange(2, upper):
+        nums.append(True)
+
+    # crossing out composite numbers
+    for i in xrange(2, int(math.sqrt(upper))+1):
+    	if nums[i]:
+	    j = i*i
+	    while j < upper:
+		nums[j] = False
+		j += i
+
+    # return a list of primes using generator
+    for i in xrange(2, upper):
+	    if nums[i]: yield i
+
 
 def p1():
     '''Solution to problem 1
     '''
 
     print (sum(range(0, 1000, 3))+sum(range(0, 1000, 5))-sum(range(0, 1000, 15)))
+
 
 def p2(maxlimit=4000000):
     '''Solution to problem 2
@@ -122,171 +136,180 @@ def p2(maxlimit=4000000):
     print s
 
 def p3(n=600851475143):
-	'''Solution to problem 3
-	'''
+    '''Solution to problem 3
+    
+    --key Arguments--
+    @n: number to factorize
+    @return:
+    
+    '''
 
-	# initial largest prime factor (lpf)
-	lpf = pf = 2
+    # initial largest prime factor (lpf)
+    lpf = pf = 2
 
-	# the main algorithm to find the largest prime factor of a number
-	while n != 1:
-		if n % pf == 0:
-			n /= pf
-			lpf = pf
-		else:
-			if pf < 3:
-				pf += 1
-			else:
-				pf += 2
+    # the main algorithm to find the largest prime factor of a number
+    while n != 1:
+	if n % pf == 0:
+	    n /= pf
+	    lpf = pf
+	else:
+	    pf += 1 if pf < 3 else 2
 
-	# find the largest prime factor
-	print 'The largest prime factor is:', lpf
+    # output answer:
+    print 'The largest prime factor is:', lpf
+
 
 def p4():
-	'''Solution to problem 4
-	'''
+    '''Solution to problem 4
+    '''
 
-	# a function to check palindrome
-	def is_palindrome(n):
-		s = str(n)
-		i, j = 0, len(s)-1
-		while i < j:
-			if s[i] != s[j]: return False
-			i += 1
-			j -= 1
+    # a function to check palindrome
+    def is_palindrome(n):
+	s = str(n)
+	i, j = 0, len(s)-1
+	while i < j:
+		if s[i] != s[j]: return False
+		i += 1
+		j -= 1
 	
-		return True
+	return True
 
-	# using brute-force method to find answer
-	# two integers must be between 100~999
-	# one of them must be divisible by 11
-	# assume that 'a' is a multiple of 11
-	largest = 0
-	for b in xrange(999, 99, -1):
-		for a in xrange(990, 99, -11):
-			tmp_ans = a*b
-			if is_palindrome(tmp_ans) and tmp_ans > largest:
-				largest = tmp_ans
-	print largest
+    # using brute-force method to find answer
+    # two integers must be between 100~999
+    # one of them must be divisible by 11
+    # assume that 'a' is a multiple of 11
+    largest = 0
+    for b in xrange(999, 99, -1):
+	for a in xrange(990, 99, -11):
+		tmp_ans = a*b
+		if is_palindrome(tmp_ans) and tmp_ans > largest:
+			largest = tmp_ans
+    print largest
 
 
 def p5():
-	'''Solution to problem 5
-	'''
+    '''Solution to problem 5
+    '''
 
-	base = 1*2*3*5*7*11*13*17*19
-	print base*24
+    base = 1*2*3*5*7*11*13*17*19
+    print base*24
+
 
 def p6():
-	'''Solution to problem 6
-	'''
+    '''Solution to problem 6
+    '''
 	
-	square_of_sum = sum(range(1,101))**2
-	sum_of_squares = sum(map(lambda x: x*x, range(1, 101)))
-	print abs(square_of_sum - sum_of_squares)
+    square_of_sum = sum(range(1,101))**2
+    sum_of_squares = sum(map(lambda x: x*x, range(1, 101)))
+    print abs(square_of_sum - sum_of_squares)
+
 
 def p7(limit=10001):
-	'''Solution to problem 7
-	'''
+    '''Solution to problem 7
+    '''
 	
-	prime_list = [2, 3, 5, 7]
+    prime_list = [2, 3, 5, 7]
 
-	# primality test
-	def is_prime(n, list):
-		for p in prime_list[2:]:
-			if p*p > n:
-				return True
-			elif n%p == 0:	
-				return False
+    # primality test
+    def is_prime(n, list):
+	for p in prime_list[2:]:
+		if p*p > n:
+			return True
+		elif n%p == 0:	
+			return False
 	
-	# generate prime numbers until hitting limit
-	p = 11
-	while len(prime_list) < limit:
-		if is_prime(p, prime_list):
-			prime_list.append(p)
-		if is_prime(p+2, prime_list):
-			prime_list.append(p+2)
-		p += 6
+    # generate prime numbers until hitting limit
+    p = 11
+    while len(prime_list) < limit:
+	if is_prime(p, prime_list):
+		prime_list.append(p)
+	if is_prime(p+2, prime_list):
+		prime_list.append(p+2)
+	p += 6
 		
-	print prime_list[limit-1]
+    print prime_list[limit-1]
+
 
 def p7_alt(limit=10001):
-	'''Alternative solution to problem 7
-	This solution is faster than p7 function for sure.
-	'''
+    '''Alternative solution to problem 7
+    This solution is faster than p7 function for sure.
+    '''
 
-	count = 2
-	candidate = p = 5
+    count = 2
+    candidate = p = 5
 	
-	#s = time.time()
-	while 1:
-		if prime(p):
-			count += 1
-			candidate = p
-			if count == limit: break
-		if prime(p+2):
-			count += 1
-			candidate = p+2
-			if count == limit: break
-		p += 6
-	#e = time.time()
+    #s = time.time()
+    while 1:
+	if prime(p):
+		count += 1
+		candidate = p
+		if count == limit: break
+	if prime(p+2):
+		count += 1
+		candidate = p+2
+		if count == limit: break
+	p += 6
+    #e = time.time()
+    print candidate#, str(e - s)
 
-	print candidate#, str(e - s)
 
 def p8():
-	'''Solution to problem 8
-	'''
-	n = str(7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450)
+    '''Solution to problem 8
+    '''
+    n = str(7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450)
 
-	largest = product = int(n[0])*int(n[1])*int(n[2])*int(n[3])*int(n[4])
+    largest = product = int(n[0])*int(n[1])*int(n[2])*int(n[3])*int(n[4])
 
-	s = time.time()
-	for i in xrange(5, 1000):
-		product = int(n[i])*int(n[i-1])*int(n[i-2])*int(n[i-3])*int(n[i-4])
-		if product == 0:
-			continue
-		elif product > largest:
-			largest = product
-	e = time.time()
-	print largest, str(e-s)
+    for i in xrange(5, len(n)):
+	product = int(n[i])*int(n[i-1])*int(n[i-2])*int(n[i-3])*int(n[i-4])
+	if product == 0:
+		continue
+	elif product > largest:
+		largest = product
+    print largest
+
 
 def p9():
     '''Solution to problem 9
+    let a = m^2 - n^2
+    let b = 2*m*n
+    let c = m^2 + n^2
+    a + b + c = 1000 ==> m(m+n) = 500
+    assume m > n, then m = 20, n =5
+    => a = 375, b = 200, c = 425
+    a*b*c = 31875000
+
     '''
 
-    return
+    print 31875000
+
 
 def p10(limit=2000000):
     '''Solution to problem 10
+    This solution uses sieve() generator to generate prime numbers.
+    Then iterator through those numbers generated to find the sum.
+    This function obtains the answer within 1.5 seconds.
+    
+    --Key Arguments--
+    @limit: the upper bound of prime numbers
+    @return: 
+    
+    '''
+   
+    s = 0
+    for p in sieve(limit):
+	s += p
+    print s
+
+
+if __name__ == '__main__':
+    ''' Program entry starts here:
     '''
 
-    p, s = 5, 5
-    t1 = time.time()
-    while p < limit:
-	if prime(p):
-		s += p
-	if prime(p+2):
-		s += (p+2)
-	p += 6	
-    t2 = time.time()
-    print s, str(t2-t1)
-
-def main():
-	
     func_list = {
-        'sieve': sieve,	
-    	'factor': factorize,	
-    	'p1': p1, 
-    	'p2': p2, 
-    	'p3': p3, 
-    	'p4': p4, 
-    	'p5': p5, 
-    	'p6': p6, 
-    	'p7': p7,
-    	'p7alt': p7_alt,
-    	'p8': p8,
-    	'p9': p9,
-    	'p10': p10
+    	'factor': factorize, 'p7alt': p7_alt,
+    	'p1': p1, 'p2': p2, 'p3': p3, 'p4': p4, 'p5': p5,     	
+	'p6': p6, 'p7': p7, 'p8': p8, 'p9': p9,	'p10': p10
     }
 		    
     if len(sys.argv) != 2: 
@@ -295,6 +318,3 @@ def main():
 	print 'No solution to', sys.argv[1]
     else:
 	func_list[sys.argv[1]]()	
-
-if __name__ == '__main__':
-    main()
