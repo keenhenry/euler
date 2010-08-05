@@ -1,11 +1,9 @@
 =====
  This project is about solving problems created by Project Euler
  which can be found here: http://projecteuler.net/
- 07/25/2010
+ 07/15/2010
 ===== 
 
 [Note]:
 The solutions I made are all in euler.py. To run euler.py, simply do ./euler.py p#, where # = problem number. 
 For example, if you want to see the answer for problem 3, type ./euler.py p3 in the command line.
-
-The pdf files in the repository are solutions and explanations provided by Project Euler. 
