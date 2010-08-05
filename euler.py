@@ -244,44 +244,51 @@ def p8():
 	e = time.time()
 	print largest, str(e-s)
 
-def p10(limit=2000000):
-	'''Solution to problem 10
-	'''
+def p9():
+    '''Solution to problem 9
+    '''
 
-	p, s = 5, 5
-	t1 = time.time()
-	while p < limit:
-		if prime(p):
-			s += p
-		if prime(p+2):
-			s += (p+2)
-		p += 6	
-	t2 = time.time()
-	print s, str(t2-t1)
+    return
+
+def p10(limit=2000000):
+    '''Solution to problem 10
+    '''
+
+    p, s = 5, 5
+    t1 = time.time()
+    while p < limit:
+	if prime(p):
+		s += p
+	if prime(p+2):
+		s += (p+2)
+	p += 6	
+    t2 = time.time()
+    print s, str(t2-t1)
 
 def main():
 	
-	func_list = {
-		     'sieve': sieve,	
-		     'if': int_factorization,	
-		     'p1': p1, 
-		     'p2': p2, 
-		     'p3': p3, 
-		     'p4': p4, 
-		     'p5': p5, 
-		     'p6': p6, 
-		     'p7': p7,
-		     'p7alt': p7_alt,
-		     'p8': p8,
-		     'p10': p10
-		    }
+    func_list = {
+        'sieve': sieve,	
+    	'if': int_factorization,	
+    	'p1': p1, 
+    	'p2': p2, 
+    	'p3': p3, 
+    	'p4': p4, 
+    	'p5': p5, 
+    	'p6': p6, 
+    	'p7': p7,
+    	'p7alt': p7_alt,
+    	'p8': p8,
+    	'p9': p9,
+    	'p10': p10
+    }
 		    
-	if len(sys.argv) != 2: 
-		print 'Usage: python euler.py <p#>'
-	elif not func_list.has_key(sys.argv[1]):
-		print 'No solution to', sys.argv[1]
-	else:
-		func_list[sys.argv[1]]()	
+    if len(sys.argv) != 2: 
+	print 'Usage: python euler.py <p#>'
+    elif not func_list.has_key(sys.argv[1]):
+	print 'No solution to', sys.argv[1]
+    else:
+	func_list[sys.argv[1]]()	
 
 if __name__ == '__main__':
-	main()
+    main()
