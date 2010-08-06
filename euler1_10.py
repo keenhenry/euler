@@ -89,21 +89,22 @@ def sieve(upper=1000):
     '''
 
     # creating an array to hold boolean values
-    nums = [False, False]
-    for i in xrange(2, upper):
+    nums = [True]
+    for i in xrange(3, upper, 2):	# exclude even numbers
         nums.append(True)
 
     # crossing out composite numbers
-    for i in xrange(2, int(math.sqrt(upper))+1):
+    for i in xrange(1, int((math.sqrt(upper)-1)/2)+1):
     	if nums[i]:
-	    j = i*i
-	    while j < upper:
+	    j = 2*i*(i+1)
+	    while j < len(nums):
 		nums[j] = False
-		j += i
+		j += 2*i+1
 
     # return a list of primes using generator
-    for i in xrange(2, upper):
-	    if nums[i]: yield i
+    for i in xrange(0, len(nums)):
+	    if i==0: yield 2
+	    elif nums[i]: yield (2*i+1)
 
 
 def p1():
