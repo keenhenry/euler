@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-""" Project Euler Solutions
+""" Project Euler Solutions: Problem 1 - 10
 """
 
 import sys
