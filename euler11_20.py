@@ -36,14 +36,14 @@ def p11():
     m = 0
     for i in xrange(len(grid)):
         for j in xrange(len(grid)-3):
-  	    t1 = tuple([grid[i][j], grid[i][j+1], grid[i][j+2], grid[i][j+3]]) 
-	    t2 = tuple([grid[j][i], grid[j+1][i], grid[j+2][i], grid[j+3][i]])
+  	    t1 = tuple([grid[i][j], grid[i][j+1], grid[i][j+2], grid[i][j+3]])	# left-right
+	    t2 = tuple([grid[j][i], grid[j+1][i], grid[j+2][i], grid[j+3][i]])	# up-down
 	    m = max(m, reduce(lambda x, y: x*y, t1), reduce(lambda x, y: x*y, t2))
     
     for i in xrange(len(grid)-3):
 	for j in xrange(len(grid)-3):
-   	    t3 = tuple([grid[j][i], grid[j+1][i+1], grid[j+2][i+2], grid[j+3][i+3]])
-  	    t4 = tuple([grid[j][i+3], grid[j+1][i+2], grid[j+2][i+1], grid[j+3][i]])
+   	    t3 = tuple([grid[j][i], grid[j+1][i+1], grid[j+2][i+2], grid[j+3][i+3]])	# upper left to bottom right
+  	    t4 = tuple([grid[j][i+3], grid[j+1][i+2], grid[j+2][i+1], grid[j+3][i]])	# upper right to bottom left
 	    m = max(m, reduce(lambda x, y: x*y, t3), reduce(lambda x, y: x*y, t4))
   
     # output answer
@@ -56,6 +56,22 @@ def p13():
 
     nums = open('bignum', 'r')
     print str(sum([long(line.strip('\n')) for line in nums.readlines()]))[:10]
+
+
+def p15(n=20):
+    '''Solution to problem 15 
+    '''
+    
+    # initialize grid using list comprehension
+    grid = [[1 if j==0 or i==0 else 0 for j in xrange(n+1)] for i in xrange(n+1)]
+    
+    # calculating routes
+    for i in xrange(1, 21):
+	for j in xrange(1, 21):
+	    grid[i][j] = grid[i-1][j] + grid[i][j-1]
+
+    # output answer: grid[n][n]
+    print grid[n][n]
 
 
 def p16(n=2**1000):
@@ -80,7 +96,7 @@ def main():
     '''
 
     func_list = {
-	'p11': p11, 'p13': p13,	    
+        'p11': p11, 'p13': p13,	'p15': p15,    
         'p16': p16, 'p20': p20
     }
 		    
