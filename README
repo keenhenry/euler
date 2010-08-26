@@ -8,5 +8,5 @@
 Solutions from problem 1 to problem 10 are in euler1_10.py.
 Solutions from problem 11 to problem 20 are in euler11_20.py.
 
-To get answer of a particular problem, run ./euler.py p#, where # = problem number. For example, 
+To get answer of a particular problem, run ./euler.py p#, where # is problem number. For example, 
 if you want to see the answer for problem 3, type ./euler.py p3 in the command line.

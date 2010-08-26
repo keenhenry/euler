@@ -7,6 +7,33 @@ import sys
 import time
 #import math
 
+def factorize(n):
+    '''A function that implements integer factorization.
+   
+    ---Key Arguments---
+    @n: number to factorize
+    @return: dict that stores the result of factorization
+    
+    '''
+
+    # initial prime factor
+    pf = 2
+
+    # a dictionary of prime factors -> 
+    # {k: v} = {prime factor: frequency}
+    pfs = {}
+
+    # find the prime factors of a number
+    while n != 1:
+	if n % pf == 0:	# n has prime factor pf
+	    n /= pf		
+	    pfs[pf] = (pfs[pf]+1) if pfs.has_key(pf) else 1
+	else: 		# n has no prime factor pf; 
+			# update pf to find new prime factor
+	    pf += 1 if (pf < 3) else 2
+    
+    return pfs
+	
 
 def p11():
     '''Solution to problem 11
@@ -50,12 +77,40 @@ def p11():
     print m
 
 
+def p12(n_of_divs=500):
+    '''Solution to problem 12 
+    '''
+    
+    def tri_gen():
+	i = 10
+	while True:
+	    yield i*(i+1)/2
+	    i += 1
+   
+    def n_of_facs(facs):
+	n = 1
+	for v in facs.itervalues():
+	    n *= (v+1)
+	return n
+
+    for tri in tri_gen():
+	if n_of_facs(factorize(tri)) >= n_of_divs:
+	    print tri
+	    break
+
+
 def p13():
     '''Solution to problem 13 
     '''
 
     nums = open('bignum', 'r')
     print str(sum([long(line.strip('\n')) for line in nums.readlines()]))[:10]
+
+
+def p14():
+    '''Solution to problem 14 
+    '''
+    return
 
 
 def p15(n=20):
@@ -96,7 +151,7 @@ def main():
     '''
 
     func_list = {
-        'p11': p11, 'p13': p13,	'p15': p15,    
+        'p11': p11, 'p12': p12, 'p13': p13, 'p14': p14, 'p15': p15,    
         'p16': p16, 'p20': p20
     }
 		    
