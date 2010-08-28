@@ -107,10 +107,30 @@ def p13():
     print str(sum([long(line.strip('\n')) for line in nums.readlines()]))[:10]
 
 
-def p14():
+def p14(uppbound=1000000):
     '''Solution to problem 14 
     '''
-    return
+  
+    # lsn: longest sequence starting number
+    lsn, max_seq_len = 2, 2
+    seq_table = {1:1}
+
+    # update longest sequence starting number and length
+    for start in xrange(2, uppbound):
+        cur, count = start, 0
+	while cur not in seq_table:
+	    cur = (cur/2) if (cur%2==0) else (3*cur+1)
+	    count += 1
+	
+	count += seq_table[cur]
+	seq_table[start] = count
+   	
+	if count > max_seq_len:
+	    max_seq_len = count
+	    lsn = start
+
+    print 'longest seqence staring number:', \
+		lsn, "length:", max_seq_len
 
 
 def p15(n=20):
@@ -152,7 +172,7 @@ def main():
 
     func_list = {
         'p11': p11, 'p12': p12, 'p13': p13, 'p14': p14, 'p15': p15,    
-        'p16': p16, 'p20': p20
+	'p16': p16, 'p20': p20 
     }
 		    
     if func_list.has_key(sys.argv[1]):
