@@ -7,6 +7,9 @@
 [Note]:
 Solutions from problem 1 to problem 10 are in euler1_10.py.
 Solutions from problem 11 to problem 20 are in euler11_20.py.
+Solutions from problem 21 to problem 30 are in euler21_30.py.
+Solutions from problem 31 to problem 40 are in euler31_40.py.
+Solutions from problem 41 to problem 50 are in euler41_50.py.
 
 To get answer of a particular problem, run ./euler.py p#, where # is problem number. For example, 
 if you want to see the answer for problem 3, type ./euler.py p3 in the command line.

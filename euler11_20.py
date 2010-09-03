@@ -157,6 +157,79 @@ def p16(n=2**1000):
     print sum(map(int, list(str(n))))
 
 
+def p17():
+    '''Solution to problem 17
+    '''
+
+    translate = {
+    	'1': 'one', '2': 'two', '3': 'three', '4': 'four', '5': 'five',
+	'6': 'six', '7': 'seven', '8': 'eight', '9': 'nine', '10': 'ten',
+	'11': 'eleven', '12': 'twelve', '13': 'thirteen', '14': 'fourteen', '15': 'fifteen',
+	'16': 'sixteen', '17': 'seventeen', '18': 'eighteen', '19': 'nineteen', '20': 'twenty',
+	'30': 'thirty', '40': 'forty', '50': 'fifty', '60': 'sixty', '70': 'seventy',
+	'80': 'eighty', '90': 'ninety', '100': 'onehundred', '200': 'twohundred', '300': 'threehundred', 
+	'400': 'fourhundred', '500': 'fivehundred', '600': 'sixhundred', '700': 'sevenhundred', '800': 'eighthundred', 
+	'900': 'ninehundred', '1000': 'onethousand'
+    }
+
+    def two_digits(n):
+	str_n = str(n)
+	
+	if n%10 == 0:
+	    return translate[str_n]
+	if n <= 20:
+	    return translate[str_n]
+	if n < 30:
+	    return translate['20'] + translate[str_n[1]]
+	if n < 40:
+	    return translate['30'] + translate[str_n[1]]
+	if n < 50:
+	    return translate['40'] + translate[str_n[1]]
+	if n < 60:
+	    return translate['50'] + translate[str_n[1]]
+	if n < 70:
+	    return translate['60'] + translate[str_n[1]]
+	if n < 80:
+	    return translate['70'] + translate[str_n[1]]
+	if n < 90:
+	    return translate['80'] + translate[str_n[1]]
+	if n < 100:
+	    return translate['90'] + translate[str_n[1]]
+    
+    def three_digits(n):
+	if n%100 == 0:
+	    return translate[str(n)]
+	if n < 200:
+ 	    return translate['100'] + 'and' + two_digits(n-100)
+	if n < 300:
+ 	    return translate['200'] + 'and' + two_digits(n-200)
+	if n < 400:
+ 	    return translate['300'] + 'and' + two_digits(n-300)
+	if n < 500:
+ 	    return translate['400'] + 'and' + two_digits(n-400)
+	if n < 600:
+ 	    return translate['500'] + 'and' + two_digits(n-500)
+	if n < 700:
+ 	    return translate['600'] + 'and' + two_digits(n-600)
+	if n < 800:
+ 	    return translate['700'] + 'and' + two_digits(n-700)
+	if n < 900:
+ 	    return translate['800'] + 'and' + two_digits(n-800)
+	if n < 1000:
+ 	    return translate['900'] + 'and' + two_digits(n-900)
+
+    s = ''
+    for i in xrange(1, 1001):
+	if i < 100:
+            s += two_digits(i)
+    	elif i < 1000:
+            s += three_digits(i)
+    	else:
+            s += translate[str(i)]
+    
+    print len(s)
+
+
 def p20(n=100):
     '''Solution to problem 20
     Again it is a one liner!!! This is really good python!
@@ -172,7 +245,7 @@ def main():
 
     func_list = {
         'p11': p11, 'p12': p12, 'p13': p13, 'p14': p14, 'p15': p15,    
-	'p16': p16, 'p20': p20 
+	'p16': p16, 'p17': p17, 'p20': p20 
     }
 		    
     if func_list.has_key(sys.argv[1]):
