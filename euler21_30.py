@@ -5,6 +5,8 @@
 
 import sys
 import time
+import euler11_20
+import euler1_10
 #import math
 
 # function to generate fibonacci numbers: a generator	
@@ -13,6 +15,41 @@ def fib():
     while True:
 	yield b, i
 	a, b, i = b, a+b, i+1
+
+
+def p21(limit=10000):
+    '''Solution to problem 21 
+    '''
+
+    def d(n):
+	'''d(n)
+	Calculate the sum of proper divisors of n.
+	'''
+	
+	s = 1
+	facs = euler11_20.factorize(n)
+	for k in facs: s *= (k**(facs[k]+1) - 1)/(k-1)
+	return s - n
+    
+    amicables = [True for x in xrange(limit)]
+
+    # prime numbers cannot be amicable numbers
+    # so we eliminate checking those numbers
+    for x in euler1_10.sieve(limit):
+	amicables[x] = False
+   
+    # cross out non-amicable numbers
+    for x in xrange(220, limit):
+	if amicables[x]:
+	    y = d(x)
+	    amicables[x] = False if (d(y) != x or x == y) else True
+
+    # calculate the sum of amicable pairs and output
+    s = 0
+    for i in xrange(220, limit): 
+	if amicables[i]: s += i
+    print s
+
 
 def p25():
     '''Solution to problem 25 
@@ -23,12 +60,13 @@ def p25():
 	    print i
 	    break
 
+
 def main():
     '''Main program of module euler21_30 
     '''
 
     func_list = {
-        'p25': p25    
+    	'p21': p21, 'p25': p25    
     }
 		    
     if func_list.has_key(sys.argv[1]):
