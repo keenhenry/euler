@@ -5,7 +5,6 @@
 
 import sys
 import time
-#import math
 
 def factorize(n):
     '''A function that implements integer factorization.
@@ -230,6 +229,26 @@ def p17():
     print len(s)
 
 
+def p19():
+    '''Solution to problem 19
+    '''
+
+    def days_of_month(m, y):
+	if m==2:
+	    return 29 if (y%4 == 0 and y%100 != 0 or y%400 == 0) else 28
+    	else:
+	    return 30 if (m==4 or m==6 or m==9 or m==11) else 31
+	
+    first_sun, suns = 6, 0
+    for y in xrange(1901, 2001):
+	for m in xrange(1, 13):
+	    if first_sun == 1: suns += 1
+	    m_days = days_of_month(m, y)
+	    while first_sun <= m_days: first_sun += 7
+	    first_sun -= m_days
+    print suns
+
+
 def p20(n=100):
     '''Solution to problem 20
     Again it is a one liner!!! This is really good python!
@@ -245,7 +264,7 @@ def main():
 
     func_list = {
         'p11': p11, 'p12': p12, 'p13': p13, 'p14': p14, 'p15': p15,    
-	'p16': p16, 'p17': p17, 'p20': p20 
+	'p16': p16, 'p17': p17, 'p19': p19, 'p20': p20 
     }
 		    
     if func_list.has_key(sys.argv[1]):
