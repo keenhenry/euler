@@ -7,6 +7,7 @@ import sys
 import time
 import euler11_20
 import euler1_10
+import string
 #import math
 
 # function to generate fibonacci numbers: a generator	
@@ -51,6 +52,21 @@ def p21(limit=10000):
     print s
 
 
+def p22():
+    '''Solution to problem 22 
+    '''
+    
+    f = open('names.txt', 'r')
+    names = sorted([n.strip('"') for n in f.read().split(',')])
+    f.close()
+
+    # calculate total name scores
+    total, base = 0, ord('A')-1
+    for i in xrange(len(names)):
+	total += (i+1)*sum([ord(c)-base for c in names[i]])
+    print total
+
+
 def p25():
     '''Solution to problem 25 
     '''
@@ -66,7 +82,7 @@ def main():
     '''
 
     func_list = {
-    	'p21': p21, 'p25': p25    
+    	'p21': p21, 'p22': p22, 'p25': p25    
     }
 		    
     if func_list.has_key(sys.argv[1]):
