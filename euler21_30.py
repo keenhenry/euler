@@ -76,13 +76,22 @@ def p25():
 	    print i
 	    break
 
+def p28(n=1001):
+    '''Solution to problem 28 
+    '''
+    s = 0
+    for i in xrange(1, 501):
+	s += 4*(4*i*i + i + 1)
+    print (s+1)
+    
 
 def main():
     '''Main program of module euler21_30 
     '''
 
     func_list = {
-    	'p21': p21, 'p22': p22, 'p25': p25    
+	'p21': p21, 'p22': p22, 'p25': p25, 
+	'p28': p28    
     }
 		    
     if func_list.has_key(sys.argv[1]):
