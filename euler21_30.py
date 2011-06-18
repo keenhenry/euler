@@ -17,6 +17,13 @@ def fib():
 	yield b, i
 	a, b, i = b, a+b, i+1
 
+def ydigits(num=0):
+    '''A function to extract the digits of an integer.
+    '''
+
+    while num!=0:
+    	d, num = num%10, num/10
+	yield d
 
 def p21(limit=10000):
     '''Solution to problem 21 
@@ -66,6 +73,13 @@ def p22():
 	total += (i+1)*sum([ord(c)-base for c in names[i]])
     print total
 
+def p24(p='0123456789'):
+    '''Solution to problem 24
+
+    I solved it by hand! Not that hard to do it!
+    '''
+    
+    print '2783915460'
 
 def p25():
     '''Solution to problem 25 
@@ -84,14 +98,35 @@ def p28(n=1001):
 	s += 4*(4*i*i + i + 1)
     print (s+1)
     
+def p30(upper_bound=354294):
+    '''Solution to problem 30
+
+    This solution is brute force. However, the tricky part is to determine
+    the upper bound for the search (How do you prove that it is the absolute upper bound?).
+    The upper bound used in this solution is just a simple guess (6 * 9^5 = 354294).
+    '''
+
+    s = 0   # set initial sum to zero
+
+    # the lower bound of the loop is also tricky, 
+    # in this solution, this is also a guess, but it's a guess that makes sense.
+    for i in xrange(upper_bound, 1000, -1):
+	sum_of_5th_power_of_digits = 0
+    	for j in ydigits(i):
+	    sum_of_5th_power_of_digits += j**5
+	if i == sum_of_5th_power_of_digits: s += i
+    print s
+    
+    # A one-liner solution reference:
+    # print sum([n for n in xrange(1000,354294) if sum(int(i)**5 for i in str(n)) == n])
 
 def main():
     '''Main program of module euler21_30 
     '''
 
     func_list = {
-	'p21': p21, 'p22': p22, 'p25': p25, 
-	'p28': p28    
+	'p21': p21, 'p22': p22, 'p24': p24, 'p25': p25, 
+	'p28': p28, 'p30': p30    
     }
 		    
     if func_list.has_key(sys.argv[1]):
