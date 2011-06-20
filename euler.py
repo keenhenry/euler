@@ -4,9 +4,11 @@
 """
 
 import sys
+#import cProfile
 import euler1_10
 import euler11_20
 import euler21_30
+import euler31_40
 import euler41_50
 
 if __name__ == '__main__':
@@ -21,5 +23,7 @@ if __name__ == '__main__':
 	euler11_20.main()
     elif sys.argv[1] <= 'p30':	
 	euler21_30.main()
+    elif sys.argv[1] <= 'p40':	
+	euler31_40.main()
     elif sys.argv[1] <= 'p50':	
 	euler41_50.main()

@@ -98,6 +98,19 @@ def p28(n=1001):
 	s += 4*(4*i*i + i + 1)
     print (s+1)
     
+def p29():
+    '''Solution to problem 29
+
+    Let's try brute force method first.
+    '''
+    
+    nums = {}
+    for i in xrange(2, 101):
+	for j in xrange(2, 101):
+	    num = i**j
+	    if num not in nums: nums[num] = True
+    print len(nums)
+
 def p30(upper_bound=354294):
     '''Solution to problem 30
 
@@ -114,7 +127,9 @@ def p30(upper_bound=354294):
 	sum_of_5th_power_of_digits = 0
     	for j in ydigits(i):
 	    sum_of_5th_power_of_digits += j**5
-	if i == sum_of_5th_power_of_digits: s += i
+	if i == sum_of_5th_power_of_digits:
+	    #print i
+	    s += i
     print s
     
     # A one-liner solution reference:
@@ -126,7 +141,7 @@ def main():
 
     func_list = {
 	'p21': p21, 'p22': p22, 'p24': p24, 'p25': p25, 
-	'p28': p28, 'p30': p30    
+	'p28': p28, 'p29': p29, 'p30': p30    
     }
 		    
     if func_list.has_key(sys.argv[1]):
