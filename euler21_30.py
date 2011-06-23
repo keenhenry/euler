@@ -25,6 +25,36 @@ def ydigits(num=0):
     	d, num = num%10, num/10
 	yield d
 
+def sigma(n=1):
+    '''A function to calculate the sum of the proper divisors of a positive integer n.
+    
+    The idea is to factorize n first, then calculate the sum of proper divisors
+    '''
+    
+    # A copy of original value of n
+    N = n
+
+    # initial prime factor
+    pf = 2
+
+    # a dictionary of prime factors -> {k: v} = {prime factor: frequency}
+    pfs = {}
+
+    # find the prime factors of a number
+    while n != 1:
+	if n % pf == 0:	# n has prime factor pf
+	    n /= pf		
+	    pfs[pf] = (pfs[pf]+1) if pfs.has_key(pf) else 1
+	else: 		# n has no prime factor pf; update pf to find new prime factor
+	    pf += 1 if (pf < 3) else 2
+
+    # The sum of proper divisors
+    s = 1
+    for k, v in pfs.items():
+        s *= (k**(v+1) - 1) / (k - 1)
+    return (s-N)	# sum of proper divisors	
+
+
 def p21(limit=10000):
     '''Solution to problem 21 
     '''
@@ -72,6 +102,31 @@ def p22():
     for i in xrange(len(names)):
 	total += (i+1)*sum([ord(c)-base for c in names[i]])
     print total
+
+def p23(upper=28123):
+    '''Solution to problem 23 
+
+    This solution can be further optimized. Think about how.
+    '''
+ 
+    nums = [True for i in xrange(upper+1)]
+    abundants = []
+
+    # Find abundant numbers first: abundant numbers can be odd and even!
+    # Watch out. Abundant numbers below 945 are all even! But above that,
+    # Odd abundants could occur
+    for i in xrange(12, upper+1):
+        if sigma(i) > i: abundants.append(i) 
+    
+    # Calculate the final sum
+    s = ((1+upper)*upper) / 2
+    for i in xrange(len(abundants)):
+        for j in xrange(i, len(abundants)):
+    		n = abundants[i]+abundants[j]
+    		if n <= upper and nums[n]: 
+			s -= n
+			nums[n] = False
+    print s
 
 def p24(p='0123456789'):
     '''Solution to problem 24
@@ -140,7 +195,7 @@ def main():
     '''
 
     func_list = {
-	'p21': p21, 'p22': p22, 'p24': p24, 'p25': p25, 
+	'p21': p21, 'p22': p22, 'p23': p23, 'p24': p24, 'p25': p25, 
 	'p28': p28, 'p29': p29, 'p30': p30    
     }
 		    
