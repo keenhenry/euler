@@ -5,6 +5,7 @@
 
 import sys
 import time
+from euler1_10 import sieve
 
 def fib():
     '''A function to generate fibonacci numbers: a generator	
@@ -65,6 +66,28 @@ def p34(upper=2540160):
     	if i == sum_of_factorial_of_digits: s += i
     print s
 
+def p35(limit=1000000):
+    '''Solution to problem 35 
+    '''
+   
+    # Building a dictionary of primes below 1 million
+    primes = {}
+    for p in sieve(1000000):
+    	primes[p] = False	# Initialize to NOT a circular prime
+    
+    n_of_cprimes = 0    # number of circular primes
+    for p in primes.keys():
+	n = str(p)
+	l = len(n)	# number of iterations to rotate the string
+	while l != 0:
+	    n = n[1:] + n[0]	# string rotation
+	    if int(n) not in primes: break
+	    l -= 1
+	if l == 0: 
+	    n_of_cprimes += 1
+	    primes[p] = True
+    print n_of_cprimes
+
 def p36(limit=1000000):
     '''Solution to problem 36 
     '''
@@ -75,12 +98,23 @@ def p36(limit=1000000):
         #if is_palindrome(i) and is_palindrome(dec2bin(i)): s += i
     print s
 
+def p40():
+    '''Solution to problem 40 
+    '''
+    
+    ans, s, n = 1, '0', 1
+    while len(s) < 10000001:
+    	s += str(n)
+	n += 1
+    ans = int(s[1])*int(s[10])*int(s[100])*int(s[1000])*int(s[10000])*int(s[100000])*int(s[1000000])  
+    print ans
+
 def main():
     '''Main program of module euler31_40 
     '''
 
     func_list = {
-	'p34': p34, 'p36': p36 
+	'p34': p34, 'p35': p35, 'p36': p36, 'p40': p40 
     }
 		    
     if func_list.has_key(sys.argv[1]):
