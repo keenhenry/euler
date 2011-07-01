@@ -1,11 +1,28 @@
 #!/usr/bin/python
 
-""" Project Euler Solutions: Problem 21 - 30
+""" Project Euler Solutions: Problem 41 - 50
 """
 
 import sys
 import time
 #import math
+
+def p42():
+    '''Solution to problem 42
+    '''
+    
+    with open('words.txt', 'r') as f:
+    	words = f.read()
+   
+    def get_word_value(word=''):
+    	if word=='': return 0
+	return sum(map(lambda c: ord(c)-ord('A')+1, word))
+
+    word_list = map(lambda s: s[1:-1], words.split(','))
+    n_of_trinums, Tn = 0, set([0.5*i*(i+1) for i in xrange(1, 1000)])
+    for word in word_list:
+    	if get_word_value(word) in Tn: n_of_trinums += 1
+    print n_of_trinums
 
 def p48(n=1000):
     '''Solution to problem 48
@@ -18,7 +35,7 @@ def main():
     '''
 
     func_list = {
-        'p48': p48
+        'p42': p42, 'p48': p48
     }
 		    
     if func_list.has_key(sys.argv[1]):
