@@ -24,6 +24,17 @@ def p42():
     	if get_word_value(word) in Tn: n_of_trinums += 1
     print n_of_trinums
 
+def p45():
+    '''Solution to problem 45
+    '''
+
+    # All the triangle numbers are Hexagonal numbers except '3'!
+    #Tn = set([0.5*i*(i+1) for i in xrange(286, 100000)]) 
+    Pn = set([0.5*i*(3*i-1) for i in xrange(166, 40000)]) 
+    Hn = set([i*(2*i-1) for i in xrange(144, 30000)])
+    R = Pn & Hn
+    for n in R: print n
+
 def p48(n=1000):
     '''Solution to problem 48
     '''
@@ -35,7 +46,7 @@ def main():
     '''
 
     func_list = {
-        'p42': p42, 'p48': p48
+        'p42': p42, 'p45': p45, 'p48': p48
     }
 		    
     if func_list.has_key(sys.argv[1]):
