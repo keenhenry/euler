@@ -69,7 +69,9 @@ def p31():
     Watch out for boundary conditions though.
     '''
 
-    target, coins = 200, [1,2,5,10,20,50,100,200]
+    
+    target, coins = 200, [1, 2, 5, 10, 20, 50, 100, 200]
+    # target, coins = 100, [i for i in xrange(101)] ===> for Problem 76
     
     #
     # Recursive solution (about 3 seconds):
@@ -99,6 +101,7 @@ def p31():
     	for n in xrange(1, target+1):
 	    ways[m][n] = ways[m][n-coins[m-1]] + ways[m-1][n]
     print ways[len(coins)][target] 
+    #print ways[len(coins)][target] - 1 # for problem 76
 
     #
     # Brute-force ... not pretty ... but worked (in about 11 seconds)!
