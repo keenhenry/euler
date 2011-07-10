@@ -10,6 +10,7 @@ import euler11_20
 import euler21_30
 import euler31_40
 import euler41_50
+import euler51_60
 
 if __name__ == '__main__':
     ''' Program entry starts here:
@@ -27,3 +28,6 @@ if __name__ == '__main__':
 	euler31_40.main()
     elif sys.argv[1] <= 'p50':	
 	euler41_50.main()
+    elif sys.argv[1] <= 'p60':	
+	euler51_60.main()
+
