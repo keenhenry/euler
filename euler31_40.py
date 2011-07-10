@@ -51,6 +51,77 @@ def factorial(n):
     for i in xrange(1, n+1): ans *= i
     return ans	
 
+def p31():
+    '''Solution to problem 31 
+
+    1a + 2b + 5c + 10d + 20e + 50f + 100g + 200h = 200
+    
+    This problem is a typical form of dynamic programming:
+
+    Let final solution set be C(N, S) -- a function of N and S.
+    Let N = The target currency -- 200 in this problem.
+    Let S = a set of available denomination for change -- {1, 2, 5, 10, 20, 50, 100, 200} in this problem.
+    Let m = the index of the largest demomination in S.
+
+    The formula: C(N, S) = C(N-Sm, S) + C(N, S-Sm)
+
+    We can use recursive algorithm to solve this problem ... OR using dynamic programming!
+    Watch out for boundary conditions though.
+    '''
+
+    target, coins = 200, [1,2,5,10,20,50,100,200]
+    
+    #
+    # Recursive solution (about 3 seconds):
+    #
+
+    #def ways(N=0, S=[]):
+    	# 3 base conditions
+    #	if N==0: return 1
+    #	if N<0: return 0
+    #	if N>=1 and len(S)==0: return 0
+	
+    #	return ways(N,S[:-1]) + ways(N-S[-1], S)
+    
+    #print ways(target, coins)
+    
+    #
+    # Dynamic programming solution (within 1 second):
+    #
+
+    #ways = [1]+[0]*target	# an intial table
+    #for coin in coins:
+    #	for i in range(coin, target+1):
+    #   	    ways[i] += ways[i-coin]
+    #print ways[target]
+    ways = [([1]+[0]*target) for i in xrange(len(coins)+1)]
+    for m in xrange(1, len(coins)+1):
+    	for n in xrange(1, target+1):
+	    ways[m][n] = ways[m][n-coins[m-1]] + ways[m-1][n]
+    print ways[len(coins)][target] 
+
+    #
+    # Brute-force ... not pretty ... but worked (in about 11 seconds)!
+    #
+
+    #ways = 0
+    #for a in xrange(0, 201):
+    #  for b in xrange(0, 101):
+    #    if a+2*b > 200: break
+    #    for c in xrange(0, 41):
+    #	  if a+b*2+c*5 > 200: break
+    #	  for d in xrange(0, 21):
+    #	    if a+b*2+c*5+d*10> 200: break
+    #	    for e in xrange(0, 11):
+    #	      if a+b*2+c*5+d*10+e*20 > 200:break
+    #	      for f in xrange(0, 5):
+    #		if a+b*2+c*5+d*10+e*20+f*50 > 200:break
+    #	        for g in xrange(0, 3):
+    #		  if a+b*2+c*5+d*10+e*20+f*50+g*100 > 200:break
+    #		  for h in xrange(0, 2):
+    #		    if (a+2*b+5*c+10*d+20*e+50*f+100*g+200*h == 200): ways += 1
+    #print ways
+
 def p34(upper=2540160):
     '''Solution to problem 34 
     
@@ -114,7 +185,7 @@ def main():
     '''
 
     func_list = {
-	'p34': p34, 'p35': p35, 'p36': p36, 'p40': p40 
+	'p31': p31, 'p34': p34, 'p35': p35, 'p36': p36, 'p40': p40 
     }
 		    
     if func_list.has_key(sys.argv[1]):
