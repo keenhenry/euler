@@ -68,7 +68,6 @@ def p31():
     We can use recursive algorithm to solve this problem ... OR using dynamic programming!
     Watch out for boundary conditions though.
     '''
-
     
     target, coins = 200, [1, 2, 5, 10, 20, 50, 100, 200]
     # target, coins = 100, [i for i in xrange(101)] ===> for Problem 76
@@ -80,8 +79,7 @@ def p31():
     #def ways(N=0, S=[]):
     	# 3 base conditions
     #	if N==0: return 1
-    #	if N<0: return 0
-    #	if N>=1 and len(S)==0: return 0
+    #	if N<0 or (N>=1 and len(S)==0): return 0
 	
     #	return ways(N,S[:-1]) + ways(N-S[-1], S)
     
@@ -172,6 +170,31 @@ def p36(limit=1000000):
         #if is_palindrome(i) and is_palindrome(dec2bin(i)): s += i
     print s
 
+def p37():
+    '''Solution to problem 37
+    '''
+  
+    def is_truncatable_prime(p=0, d=None):
+	"Return True if p is a truncatable prime from left to right, otherwise False"
+
+	rel, p_from_right, p_from_left = True, str(p), str(p)
+	l = len(p_from_left)
+
+	while l > 0:
+	    if int(p_from_left) in d and int(p_from_right) in d: 
+	    	p_from_left = p_from_left[1:]
+		p_from_right = p_from_right[:-1]
+		l -= 1
+	    else: 
+	    	rel = False
+		break
+	return rel
+
+    s, primes = 0, set([p for p in sieve(800000)])
+    for p in xrange(23, 800000, 2): 
+    	if is_truncatable_prime(p, primes): s += p
+    print s
+
 def p40():
     '''Solution to problem 40 
     '''
@@ -188,7 +211,7 @@ def main():
     '''
 
     func_list = {
-	'p31': p31, 'p34': p34, 'p35': p35, 'p36': p36, 'p40': p40 
+	'p31': p31, 'p34': p34, 'p35': p35, 'p36': p36, 'p37': p37, 'p40': p40 
     }
 		    
     if func_list.has_key(sys.argv[1]):
