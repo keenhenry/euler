@@ -1,9 +1,4 @@
-#!/usr/bin/python
-
-""" Project Euler Solutions: Problem 31 - 40
-"""
-
-import sys
+#!/usr/bin/python """ Project Euler Solutions: Problem 31 - 40 """ import sys
 import time
 from euler1_10 import sieve
 
@@ -50,6 +45,20 @@ def factorial(n):
     ans = 1
     for i in xrange(1, n+1): ans *= i
     return ans	
+
+def gcd(a, b):
+    '''A function to find the greatest common advisor of two integers
+    '''
+
+    if a == 0:
+        return b;
+
+    while b != 0:
+        if a > b: a = a - b
+        else    : b = b - a
+
+    return a
+
 
 def p31():
     '''Solution to problem 31 
@@ -195,6 +204,33 @@ def p37():
     	if is_truncatable_prime(p, primes): s += p
     print s
 
+def p39():
+    '''Solution to problem 39 
+    '''
+
+    # The key question is how to generate Pythagorean triples
+    # Use this formula: a = m^2 - n^2, b = 2mn, c = m^2 + n^2
+    # where m and n are coprime and (m - n) is odd, to generate
+    # PRIMITIVE triples. (Also, m > n)
+    # After you get all primitives primes, you can use them to
+    # find non-primitive ones easily.
+    # Other properties you might take into account:
+    # 1) sum of pythagorean triple is always an even number
+    # 2)  
+
+    m, n = 2, 1
+    a, b, c = 3, 4, 5
+
+    while :
+
+
+    # initialize dictionary p
+    # p = {} 
+    # for i in xrange(12, 1001, 2):
+    #     p[i] = 0;
+
+    # print p 
+
 def p40():
     '''Solution to problem 40 
     '''
@@ -211,7 +247,7 @@ def main():
     '''
 
     func_list = {
-	'p31': p31, 'p34': p34, 'p35': p35, 'p36': p36, 'p37': p37, 'p40': p40 
+            'p31': p31, 'p34': p34, 'p35': p35, 'p36': p36, 'p37': p37, 'p39': p39, 'p40': p40 
     }
 		    
     if func_list.has_key(sys.argv[1]):
