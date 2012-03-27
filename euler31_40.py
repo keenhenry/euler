@@ -1,4 +1,9 @@
-#!/usr/bin/python """ Project Euler Solutions: Problem 31 - 40 """ import sys
+#!/usr/bin/python 
+
+""" Project Euler Solutions: Problem 31 - 40 
+""" 
+
+import sys
 import time
 from euler1_10 import sieve
 
@@ -211,25 +216,48 @@ def p39():
     # The key question is how to generate Pythagorean triples
     # Use this formula: a = m^2 - n^2, b = 2mn, c = m^2 + n^2
     # where m and n are coprime and (m - n) is odd, to generate
-    # PRIMITIVE triples. (Also, m > n)
+    # PRIMITIVE triples. 
+    # This formula is guaranteed to generate ALL primitive triples
+    # if the conditions for m, n are satisfied.
+    #
     # After you get all primitives primes, you can use them to
     # find non-primitive ones easily.
+    #
     # Other properties you might take into account:
     # 1) sum of pythagorean triple is always an even number
-    # 2)  
+    # 2) Let m's always be greater than n's for ease of computation 
 
-    m, n = 2, 1
-    a, b, c = 3, 4, 5
+    # initialize dictionary p: a dictionary storing (perimeter, count) pairs
+    s = time.time()
+    p = {} 
+    n = 1
+    while n <= 15:
+        m = n+1
+        while True:
+            if gcd(m, n) == 1:
+                a = m*m - n*n
+                b = 2*m*n
+                c = m*m + n*n
 
-    while :
+                if (a+b+c) <= 1000:
+                    # a primitive pythagorean triple
+                    if (a+b+c) in p: p[a+b+c] += 1                       
+                    else           : p[a+b+c] = 1
 
+                    # count the non-primitive pythagorean triples
+                    for i in xrange(2*(a+b+c), 1001, a+b+c): 
+                        if i not in p: p[i] = 1                       
+                        else         : p[i] += 1
+                else:
+                    break
+            m += 2
+        n += 1
 
-    # initialize dictionary p
-    # p = {} 
-    # for i in xrange(12, 1001, 2):
-    #     p[i] = 0;
+    # return answer: the maximized key value of p
+    ans = max(p, key=p.get)
+    e = time.time()
+    print ans, ' finished in ', str(e - s), ' seconds'
 
-    # print p 
 
 def p40():
     '''Solution to problem 40 
@@ -251,6 +279,6 @@ def main():
     }
 		    
     if func_list.has_key(sys.argv[1]):
-	func_list[sys.argv[1]]()	
+        func_list[sys.argv[1]]()	
     else:
-	print 'No solution to', sys.argv[1]
+        print 'No solution to', sys.argv[1]
