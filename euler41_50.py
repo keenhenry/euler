@@ -5,7 +5,41 @@
 
 import sys
 import time
-#import math
+from heapq import *
+from euler1_10 import prime
+
+def p41():
+    '''Solution to problem 41
+
+    1. Generate pandigital numbers (generate permutation by BFS)
+    2. Test if it is a prime using a function implemented in euler1_10
+
+    Note: 
+    - only 7-digit and 4-digit permutations are possible to generate primes
+    - Therefore, try 7-digit permutation first!
+    - only need to find the biggest prime pandigital number
+    - is there a neater solution? for example, can you avoid some unnecessary calculations in the recursion?
+    '''
+
+    forbidden = set([2,4,5,6]) 
+    def bfs(digits, depth, n):
+        if depth == 1:
+            n += digits[0]
+            return n if (digits[0] not in forbidden) and prime(n) else -1
+        else:
+            biggest, orig_n = 0, n
+            for d in digits:
+                n = orig_n + d*(10**(depth-1))
+
+                # create a copy of parent's digit list
+                digits_left = digits[:]
+                digits_left.remove(d)
+
+                # search deeper for answer
+                biggest = max(biggest, bfs(digits_left, depth-1, n))
+            return biggest
+
+    print bfs([7, 6, 5, 4, 3, 2, 1], 7, 0)
 
 def p42():
     '''Solution to problem 42
@@ -46,7 +80,7 @@ def main():
     '''
 
     func_list = {
-        'p42': p42, 'p45': p45, 'p48': p48
+        'p41': p41, 'p42': p42, 'p45': p45, 'p48': p48
     }
 		    
     if func_list.has_key(sys.argv[1]):
