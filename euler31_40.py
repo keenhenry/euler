@@ -137,6 +137,32 @@ def p31():
     #		    if (a+2*b+5*c+10*d+20*e+50*f+100*g+200*h == 200): ways += 1
     #print ways
 
+def p33():
+    '''Solution to problem 33 
+
+    This problem can be easily brute-forced. 
+
+    However, we can eliminate some unnecessary computation by further
+    tightening the loops.
+    '''
+    
+    fractions = []
+    product_of_numerators, product_of_denominators = 1, 1
+    for tens in xrange(9, 0, -1):
+        for units in xrange(9, 0, -1):
+            for numerator_tens in xrange(tens-1, 0, -1):
+                numerator   = numerator_tens*10 + tens
+                denominator = tens*10 + units 
+
+                if (numerator / float(denominator)) == (numerator_tens / float(units)):
+                    fractions.append(str(numerator) + '/' + str(denominator))
+                    product_of_numerators   *= numerator
+                    product_of_denominators *= denominator
+
+    ans = product_of_denominators / (gcd(product_of_denominators, product_of_numerators))
+    print 'The four fractions are: ', fractions, 'And the final answer is: ', ans 
+   
+
 def p34(upper=2540160):
     '''Solution to problem 34 
     
@@ -275,7 +301,8 @@ def main():
     '''
 
     func_list = {
-            'p31': p31, 'p34': p34, 'p35': p35, 'p36': p36, 'p37': p37, 'p39': p39, 'p40': p40 
+            'p31': p31, 'p33': p33, 'p34': p34, 'p35': p35, 
+            'p36': p36, 'p37': p37, 'p39': p39, 'p40': p40 
     }
 		    
     if func_list.has_key(sys.argv[1]):
