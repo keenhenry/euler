@@ -5,6 +5,7 @@
 
 import sys
 import time
+import euler31_40
 
 def p52():
     '''Solution to problem 52
@@ -32,12 +33,41 @@ def p52():
 	else: x += 1
     print x
 
+def p53():
+    '''Solution to problem 53
+
+    This problem can be solved by calculating Pascal's triangle.
+    And remember to use dynamic programming techniques.
+    
+    You don't need to build the whole triangle, you only need half
+    of it.
+    '''
+  
+    count = 2
+    pascal_triangle_row = [0 if i <= 37 or i == 50 else
+                            (euler31_40.factorial(23)/(euler31_40.factorial(i-38)*euler31_40.factorial(61-i))) for i in xrange(0, 51)]
+
+    for n in xrange(23, 100):
+        if n%2 == 1:
+            for i in xrange(50, 49-(n+1)/2, -1):
+                if i == 50: 
+                    pascal_triangle_row[i] = pascal_triangle_row[i-1] * 2
+                    if pascal_triangle_row[i] > 1000000L: count += 1
+                else:
+                    pascal_triangle_row[i] = pascal_triangle_row[i] + pascal_triangle_row[i-1]
+                    if pascal_triangle_row[i] > 1000000L: count += 2
+        else:
+            for i in xrange(49-(n+1)/2, 50):
+                pascal_triangle_row[i] = pascal_triangle_row[i] + pascal_triangle_row[i+1]
+                if pascal_triangle_row[i] > 1000000L: count += 2
+    print count
+
 def main():
     '''Main program of module euler51_60 
     '''
 
     func_list = {
-        'p52': p52
+            'p52': p52, 'p53': p53
     }
 		    
     if func_list.has_key(sys.argv[1]):

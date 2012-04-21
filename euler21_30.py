@@ -145,6 +145,15 @@ def p25():
 	    print i
 	    break
 
+def p26():
+    '''Solution to problem 26 
+    '''
+    
+    d = 2
+    for i in xrange(2, 1000):
+    	print 1.0 / i
+    print d
+
 def p28(n=1001):
     '''Solution to problem 28 
     '''
@@ -196,7 +205,7 @@ def main():
 
     func_list = {
 	'p21': p21, 'p22': p22, 'p23': p23, 'p24': p24, 'p25': p25, 
-	'p28': p28, 'p29': p29, 'p30': p30    
+	'p26': p26, 'p28': p28, 'p29': p29, 'p30': p30    
     }
 		    
     if func_list.has_key(sys.argv[1]):
