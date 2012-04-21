@@ -62,12 +62,24 @@ def p53():
                 if pascal_triangle_row[i] > 1000000L: count += 2
     print count
 
+def p56():
+    '''Solution to problem 56
+
+    Brute-force within 1 second!
+    '''
+  
+    ans = 0
+    for a in xrange(2, 100):
+        for b in xrange(80, 100):
+            ans = max(ans, sum(map(int, str(a**b))))
+    print ans
+
 def main():
     '''Main program of module euler51_60 
     '''
 
     func_list = {
-            'p52': p52, 'p53': p53
+            'p52': p52, 'p53': p53, 'p56': p56
     }
 		    
     if func_list.has_key(sys.argv[1]):
