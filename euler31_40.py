@@ -7,6 +7,7 @@ import sys
 import time
 from euler1_10 import sieve
 
+
 def fib():
     '''A function to generate fibonacci numbers: a generator	
     '''
@@ -64,6 +65,22 @@ def gcd(a, b):
 
     return a
 
+def permute(prefix="", rest="", fn=None):
+    '''This is a function to list the permutaions of a string IN ORDER
+
+    @prefix: the prefix of the string to be permuted
+    @rest: the rest of the string to be permuted
+    @fn: a function passed in to operate on the permuted string
+    '''
+
+    l = len(rest)
+
+    if l == 0:
+        fn(prefix)
+    else:
+        for i in xrange(0, l):
+            permute(prefix+rest[i], rest[0:i]+rest[i+1:l], fn)
+
 
 def p31():
     '''Solution to problem 31 
@@ -112,7 +129,7 @@ def p31():
     for m in xrange(1, len(coins)+1):
     	for n in xrange(1, target+1):
 	    ways[m][n] = ways[m][n-coins[m-1]] + ways[m-1][n]
-    print ways[len(coins)][target] 
+    print ways[len(coins)][target]
     #print ways[len(coins)][target] - 1 # for problem 76
 
     #
@@ -136,6 +153,40 @@ def p31():
     #		  for h in xrange(0, 2):
     #		    if (a+2*b+5*c+10*d+20*e+50*f+100*g+200*h == 200): ways += 1
     #print ways
+
+def p32():
+    '''Solution to problem 32
+
+    Obviously, this is not an optimal way to solve this problem...
+    This is brute-forceing in about ~5 seconds!
+    '''
+
+    answers = set([])
+    def wrapper_func(arg):
+        '''A wrapper function to be passed to permute.
+
+        This function takes only one argument, because in 'permute', 
+        it is called with only one argument. However, to make it more general,
+        you can declare it to be 'wrapper_func(*args), which will take a list
+        of arguments.
+        '''
+
+        # print arg
+        multiplicand1 = int(arg[0])
+        multiplier1   = int(arg[1:5])
+
+        multiplicand2 = int(arg[0:2])
+        multiplier2   = int(arg[2:5])
+
+        product       = int(arg[5:])
+
+        if multiplicand1*multiplier1 == product:
+            if product not in answers:  answers.add(product) #[product] = (multiplicand1, multiplier1)
+        elif multiplicand2*multiplier2 == product:
+            if product not in answers:  answers.add(product) #[product] = (multiplicand2, multiplier2)
+
+    permute("", "123456789", wrapper_func)
+    print sum(answers)
 
 def p33():
     '''Solution to problem 33 
@@ -301,7 +352,7 @@ def main():
     '''
 
     func_list = {
-            'p31': p31, 'p33': p33, 'p34': p34, 'p35': p35, 
+            'p31': p31, 'p32': p32, 'p33': p33, 'p34': p34, 'p35': p35, 
             'p36': p36, 'p37': p37, 'p39': p39, 'p40': p40 
     }
 		    
