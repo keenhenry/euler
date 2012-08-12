@@ -161,7 +161,7 @@ def p32():
     This is brute-forceing in about ~5 seconds!
     '''
 
-    answers = set([])
+    answers = set()
     def wrapper_func(arg):
         '''A wrapper function to be passed to permute.
 
@@ -286,6 +286,30 @@ def p37():
     	if is_truncatable_prime(p, primes): s += p
     print s
 
+def p38():
+    '''Solution to problem 38
+
+    1. Permute pandigital number string from "987654321" to "918273645" (biggest mentioned in the problem)
+    2. Test if that permuted number can be decomposed into [X*1][X*2][X*3]...[X*n] form
+    '''
+  
+    def print_concat_product(x):
+        # the base of the concatenated product could be a (1-digit, but 1-digit example is mentioned in the problem i.e. 9 with (1,2,3,4,5)) 
+        # 2-digit, 3-digit, or 4-digit (and no more) number 
+        for i in xrange(2, 5):
+            concat_product = x[0:i]
+            n, base = 2, int(concat_product)
+            while len(concat_product) <= 9:
+                concat_product += str(base*n)
+                if len(concat_product) == 9 and concat_product == x:
+                    print x, "and its base:", str(base)
+                    break
+                n += 1
+
+    # print out all pandigital 9-digit numbers whose first digit is 9
+    # in the order of permutation, which is from biggest to smallest
+    permute("9", "87654321", print_concat_product)
+
 def p39():
     '''Solution to problem 39 
     '''
@@ -353,7 +377,7 @@ def main():
 
     func_list = {
             'p31': p31, 'p32': p32, 'p33': p33, 'p34': p34, 'p35': p35, 
-            'p36': p36, 'p37': p37, 'p39': p39, 'p40': p40 
+            'p36': p36, 'p37': p37, 'p38': p38, 'p39': p39, 'p40': p40 
     }
 		    
     if func_list.has_key(sys.argv[1]):
