@@ -62,6 +62,29 @@ def p53():
                 if pascal_triangle_row[i] > 1000000L: count += 2
     print count
 
+def p55(ulimit=10000):
+    '''Solution to problem 55
+    '''
+  
+    # initially, assume every number below 10000 is lychrel 
+    num_lychrel = ulimit - 1
+    for i in xrange(1, ulimit):
+        cur, num_iter = i, 0
+
+        while num_iter < 50:
+            nxt = cur + int(str(cur)[::-1])
+            if euler31_40.is_palindrome(nxt):
+                # this number is not a lychrel, because a palindrome is found
+                # through the reverse-add process; therefore 
+                # decrease the number of lychrel numbers by 1!
+                num_lychrel -= 1
+                break
+            else:
+                cur = nxt
+                num_iter += 1
+
+    print num_lychrel
+
 def p56():
     '''Solution to problem 56
 
@@ -79,7 +102,7 @@ def main():
     '''
 
     func_list = {
-            'p52': p52, 'p53': p53, 'p56': p56
+            'p52': p52, 'p53': p53, 'p55': p55, 'p56': p56
     }
 		    
     if func_list.has_key(sys.argv[1]):
