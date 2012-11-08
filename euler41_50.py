@@ -7,6 +7,8 @@ import sys
 import time
 from heapq import *
 from euler1_10 import prime
+from euler1_10 import sieve
+from euler11_20 import factorize
 
 def p41():
     '''Solution to problem 41
@@ -69,18 +71,68 @@ def p45():
     R = Pn & Hn
     for n in R: print n
 
+def p47():
+    '''Solution to problem 47
+    '''
+
+    i = 2*3*5*7 
+    while True:
+        if len(factorize(i))==4 and len(factorize(i+1))==4 and len(factorize(i+2))==4 and len(factorize(i+3))==4:
+            break
+        else:
+            i += 1
+    print i
+
+
 def p48(n=1000):
     '''Solution to problem 48
     '''
 
     print str(sum(map(lambda x: x**x, range(1, n+1))))[-10:]
     
+def p50(n=1000000):
+    '''Solution to problem 50
+
+    This solution can be executed within a second
+    '''
+
+    # first generate a set of primes below n for testing primality in O(1)
+    primes = set([p for p in sieve(n)])
+
+    # create a list of consective primes that add up just below n
+    cps, s = [], 0
+    for p in sieve(n):
+        if s <= n: 
+            s += p
+            cps.append(p)
+        else:      
+            break
+
+    # let's search the answer!
+    ans, b, e, found = 0, 0, 0, False
+    for l in xrange(len(cps), 0, -1):
+        for i in xrange(0, len(cps)-l+1):
+            s = sum(cps[i:i+l])
+
+            # the first sum found is actually the answer! 
+            # no needs to continue searching anymore!
+            if s in primes: 
+                ans, b, e, found = s, i, i+l, True
+                break
+
+        if found: break
+
+    print ans, 'with', len(cps[b:e]), 'terms'
+    # print cps[b:e]
+
+
 def main():
-    '''Main program of module euler21_30 
+    '''Main program of module euler41_50 
     '''
 
     func_list = {
-        'p41': p41, 'p42': p42, 'p45': p45, 'p48': p48
+            'p41': p41, 'p42': p42, 'p45': p45, 
+            'p47': p47, 'p48': p48, 'p50': p50
     }
 		    
     if func_list.has_key(sys.argv[1]):
