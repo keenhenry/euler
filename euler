@@ -11,6 +11,7 @@ import euler21_30
 import euler31_40
 import euler41_50
 import euler51_60
+import euler81_90
 import euler91_100
 
 if __name__ == '__main__':
@@ -31,5 +32,7 @@ if __name__ == '__main__':
 	    euler41_50.main()
     elif sys.argv[1] <= 'p60':	
 	    euler51_60.main()
+    elif sys.argv[1] <= 'p90':	
+	    euler81_90.main()
     elif sys.argv[1] >= 'p91':
 	    euler91_100.main()
