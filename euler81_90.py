@@ -55,12 +55,40 @@ def p81():
     # matrix[79][79], so we print the answer there
     print matrix[nr-1][nc-1]
 
+def p82():
+    '''Solution to problem 82
+
+    This problem can be seen as a shortest path graph problem, and 
+    solved by a shortest path algorithm. 
+
+    This problem needs to run shortest path algorithm from several
+    sources in the left most column in the matrix. That means you 
+    need to run SPA several times!
+
+    This problem is similar to problem 81 and 83!
+    '''
+
+    matrix = []
+
+    # load file content into a data structure in memory
+    f = open('matrix.txt', 'r')
+
+    for line in f.readlines():
+        numbers = line.rstrip().split(',')
+        matrix.append([int(number) for number in numbers])
+
+    # calculate minimal path sums
+    nr, nc = len(matrix), len(matrix[0])
+
+    # print answer
+    print matrix[nr-1][nc-1]
+
 def main():
     '''Main program of module euler51_60 
     '''
 
     func_list = {
-        'p81': p81
+            'p81': p81, 'p82': p82
     }
 		    
     if func_list.has_key(sys.argv[1]):

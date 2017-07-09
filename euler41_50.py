@@ -5,6 +5,7 @@
 
 import sys
 import time
+import math
 from heapq import *
 from euler1_10 import prime
 from euler1_10 import sieve
@@ -73,15 +74,59 @@ def p45():
 
 def p47():
     '''Solution to problem 47
+
+    This brute-force solution takes about 17 seconds to run
+    on my laptop.
+
+    Some thoughts for improvement:
+    1. Maybe you don't need to factorize to test distinct number of factors
+    2. There are some redundant computations, like testing the same number more than once
     '''
 
-    i = 2*3*5*7 
-    while True:
-        if len(factorize(i))==4 and len(factorize(i+1))==4 and len(factorize(i+2))==4 and len(factorize(i+3))==4:
-            break
+    # store a list of primes below 1000000
+    primes = set([p for p in sieve(1000000)])
+
+    b = 2*3*5*7 # storing the first 4 distinct prime factors number
+    e = b+3     # storing the next number to be computed
+    # i, wl = 2*3*5*7, 0
+    # while True:
+    #     if not (i+3) in primes and len(factorize(i+3)) == 4:
+    #         if not (i+2) in primes and len(factorize(i+2)) == 4:
+    #             if not (i+1) in primes and len(factorize(i+1)) == 4:
+    #                 if not i in primes and len(factorize(i)) == 4:
+    #                     # anwer found!
+    #                     break
+    #                 else:
+    #                     i += 1
+    #             else:
+    #                 i += 2
+    #         else:
+    #             i += 3
+    #     else:
+    #         i += 4
+    while b != e:
+        if not e in primes and len(factorize(e)) == 4:
+            e -= 1
+            if not e in primes and len(factorize(e)) == 4:
+                e -= 1
+                if not e in primes and len(factorize(e)) == 4:
+                    e -= 1
+                    if not e in primes and len(factorize(e)) == 4:
+                        # anwer found!
+                        break
+                    else:
+                        b, e = e+1, e+4
+                else:
+                    b, e = e+1, e+3
+            else:
+                b, e = e+1, e+2
         else:
-            i += 1
-    print i
+            b, e = e+1, e+4
+    print b
+    # print i, factorize(i)
+    # print i+1, factorize(i+1)
+    # print i+2, factorize(i+2)
+    # print i+3, factorize(i+3)
 
 
 def p48(n=1000):
